@@ -9,9 +9,8 @@ import {MustMatch} from '../validators/must-match.validator';
 })
 export class RegistrationFormComponent implements OnInit {
 
-  userTypesArray = ['psychologist', 'psychiatrist'];
   registerForm: FormGroup;
-  submitted = false;
+  formSubmitted = false;
   constructor(private formBuilder: FormBuilder) { }
 
   ngOnInit() {
@@ -19,12 +18,13 @@ export class RegistrationFormComponent implements OnInit {
       title: ['', Validators.required],
       firstName: ['', Validators.required],
       lastName: ['', Validators.required],
+      gender: ['', Validators.required],
       userName: ['', Validators.required],
-      mobile: ['', [Validators.required, Validators.minLength(10)]],
-      email: ['', [Validators.required, Validators.email]],
+      mobileNumber: ['', [Validators.required, Validators.minLength(10)]],
+      emailId: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],
       confirmPassword: ['', Validators.required],
-      acceptTerms: [false, Validators.requiredTrue]
+      acceptTermsAndConditions: [false, Validators.requiredTrue]
     }, {
       validator: MustMatch('password', 'confirmPassword')
     });
@@ -34,7 +34,7 @@ export class RegistrationFormComponent implements OnInit {
   get formControls() { return this.registerForm.controls; }
 
   formSubmit() {
-    this.submitted = true;
+    this.formSubmitted = true;
 
     // stop here if form is invalid
     if (this.registerForm.invalid) {
@@ -42,11 +42,11 @@ export class RegistrationFormComponent implements OnInit {
     }
 
     // display form values on success
-    alert('SUCCESS!! :-)\n\n' + JSON.stringify(this.registerForm.value, null, 4));
+    alert('Form Data!! =>\n\n' + JSON.stringify(this.registerForm.value, null, 4));
   }
 
   formReset() {
-    this.submitted = false;
+    this.formSubmitted = false;
     this.registerForm.reset();
   }
 
